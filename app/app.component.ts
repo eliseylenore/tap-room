@@ -15,7 +15,7 @@ import { Keg } from './keg';
       <button (click)='finishedAddNewKeg()' class="btn btn-info">Add</button>
     </div>
     <div class='panel' *ngFor='let keg of kegs'>
-      <h2>{{keg.name}}<span class="glyphicon glyphicon-triangle-bottom"></span></h2>
+      <h2>{{keg.name}}<span (click)="decreasePints(keg)" class="glyphicon glyphicon-triangle-bottom"></span></h2>
       <h3>{{keg.brand}}, \${{keg.price}}/pint</h3>
       <p>{{keg.alcoholContent}}%, {{keg.pints}} pints</p>
       <button class="btn btn-info" (click)="editKeg(keg)">Edit</button>
@@ -55,5 +55,9 @@ export class AppComponent {
 
   finishedEdit(){
     this.showEditForm = false;
+  }
+
+  decreasePints(keg) {
+    keg.pints -= 1;
   }
 }
