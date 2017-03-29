@@ -5,7 +5,7 @@ import { Keg } from './keg';
   selector: 'app-root',
   template: `
   <div class='container'>
-    <h1>Tap-Room</h1>
+    <h1>Tap-Room </h1>
     <button class="btn btn-info" (click)="newKegForm()" *ngIf = '!showNewKegForm'>Add New Keg</button>
     <div *ngIf = 'showNewKegForm' class="form-group">
       <input [(ngModel)]="newKeg.name" class='form-control'>
@@ -15,7 +15,7 @@ import { Keg } from './keg';
       <button (click)='finishedAddNewKeg()' class="btn btn-info">Add</button>
     </div>
     <div class='panel' *ngFor='let keg of kegs'>
-      <h2>{{keg.name}}</h2>
+      <h2>{{keg.name}}<span class="glyphicon glyphicon-triangle-bottom"></span></h2>
       <h3>{{keg.brand}}, \${{keg.price}}/pint</h3>
       <p>{{keg.alcoholContent}}%, {{keg.pints}} pints</p>
       <button class="btn btn-info" (click)="editKeg(keg)">Edit</button>
