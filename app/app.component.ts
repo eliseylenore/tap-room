@@ -12,19 +12,20 @@ import { Keg } from './keg';
       <input [(ngModel)]="newKeg.brand" class='form-control'>
       <input [(ngModel)]="newKeg.price" class='form-control'>
       <input [(ngModel)]="newKeg.alcoholContent" class='form-control'>
-      <button (click)='finishedAddNewKeg()'>Add</button>
+      <button (click)='finishedAddNewKeg()' class="btn btn-info">Add</button>
     </div>
     <div class='panel' *ngFor='let keg of kegs'>
       <h2>{{keg.name}}</h2>
       <h3>{{keg.brand}}, \${{keg.price}}/pint</h3>
       <p>{{keg.alcoholContent}}%, {{keg.pints}} pints</p>
       <button class="btn btn-info" (click)="editKeg(keg)">Edit</button>
-      <div *ngIf = "selectedKeg.name === keg.name">
-        <input [(ngModel)]="keg.name" class='form-control'>
-        <input [(ngModel)]="keg.brand" class='form-control'>
-        <input [(ngModel)]="keg.price" class='form-control'>
-        <input [(ngModel)]="keg.alcoholContent" class='form-control'>
-      </div>
+    </div>
+    <div *ngIf = "showEditForm">
+      <input [(ngModel)]="selectedKeg.name" class='form-control'>
+      <input [(ngModel)]="selectedKeg.brand" class='form-control'>
+      <input [(ngModel)]="selectedKeg.price" class='form-control'>
+      <input [(ngModel)]="selectedKeg.alcoholContent" class='form-control'>
+      <button (click)='finishedEdit()' class="btn btn-info">Add</button>
     </div>
   </div>
   `
@@ -34,9 +35,11 @@ export class AppComponent {
   kegs: Keg[] = [new Keg("Awesome Keg", "Renee\'s Brewery", 20, 10), new Keg("Billy Bobs IPA", "Valley Broth", 15, 8), new Keg("Stormy Weather Stout", "Grinil's Place", 8, 5)];
   selectedKeg: Keg = new Keg(null , null , NaN , NaN);
   showNewKegForm: boolean = false;
+  showEditForm: boolean = false;
   newKeg: Keg = new Keg(null , null , null , null);
 
   editKeg(keg){
+    this.showEditForm = true;
     this.selectedKeg = keg;
   }
 
@@ -48,5 +51,9 @@ export class AppComponent {
     this.kegs.push(new Keg(this.newKeg.name, this.newKeg.brand, this.newKeg.price, this.newKeg.alcoholContent));
     this.showNewKegForm = false;
     this.newKeg = new Keg(null , null , null , null);
+  }
+
+  finishedEdit(){
+    this.showEditForm = false;
   }
 }
