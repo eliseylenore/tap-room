@@ -4,7 +4,12 @@ import { Keg } from './keg';
 @Component({
   selector: 'keg-list',
   template: `
-  <div *ngFor='let keg of childKegList' >
+  <ul class="nav nav-tabs" >
+    <li role="presentation"  class="active" (click)="setFilter('allKegs')" ><a href="#">All Kegs</a></li>
+    <li role="presentation" (click)="setFilter('cheaperKegs')" ><a href="#">Cheaper Kegs</a></li>
+    <li role="presentation" (click)="setFilter('spendyBrews')" ><a href="#">Spendy Brews</a></li>
+  </ul>
+  <div *ngFor='let keg of childKegList | price: filterByPrice'>
     <div [class]="alcoholCompare(keg)">
       <h2>{{keg.name}}<span (click)="decreasePints(keg)" class="glyphicon glyphicon-triangle-bottom"></span></h2>
       <h3>{{keg.brand}}, \${{keg.price}}/pint</h3>
@@ -18,6 +23,7 @@ import { Keg } from './keg';
 export class KegListComponent {
   @Input() childKegList: Keg[];
   @Output() clickSender = new EventEmitter();
+  filterByPrice: string = "allKegs";
 
   editButtonClicked(kegToEdit: Keg) {
     this.clickSender.emit(kegToEdit);
@@ -47,5 +53,9 @@ export class KegListComponent {
     } else {
       return "normal";
     }
+  }
+
+  setFilter(value) {
+    this.filterByPrice=value;
   }
 }
