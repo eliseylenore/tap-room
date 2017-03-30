@@ -1,29 +1,15 @@
 import { Component } from '@angular/core';
 import { Keg } from './keg';
 import { KegListComponent } from './keg-list.component';
+import { NewKegComponent} from './new-keg.component';
 
 @Component({
   selector: 'app-root',
   template: `
   <div class='container'>
     <h1>Tap-Room </h1>
-    <button class="btn btn-info" (click)="newKegForm()" *ngIf = '!showNewKegForm'>Add New Keg</button>
-    <div *ngIf = 'showNewKegForm'>
-      <div  class="form-group">
-        <input [(ngModel)]="newKeg.name" class='form-control' placeholder="Keg name">
-      </div>
-      <div  class="form-group">
-        <input [(ngModel)]="newKeg.brand" class='form-control' placeholder="Brand">
-      </div>
-      <div  class="form-group">
-        <input [(ngModel)]="newKeg.price" class='form-control' placeholder="Price(per pint)">
-      </div>
-      <div class="form-group">
-        <input [(ngModel)]="newKeg.alcoholContent" class='form-control' placeholder="Percentage alcohol">
-      </div>
-      <button (click)='finishedAddNewKeg()' class="btn btn-info">Add</button>
-    </div>
     <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
+    <new-keg (newKegSender)="addKeg($event)"></new-keg>
     <div *ngIf = "selectedKeg.name">
       <div class="form-group">
         <input [(ngModel)]="selectedKeg.name" class='form-control'>
@@ -55,13 +41,7 @@ export class AppComponent {
     this.selectedKeg = keg;
   }
 
-  newKegForm(){
-    this.showNewKegForm = true;
+  addKeg(newKegFromChild: Keg) {
+    this.masterKegList.push(newKegFromChild);
   }
-
-  // finishedAddNewKeg(){
-  //   this.egs.push(new Keg(this.newKeg.name, this.newKeg.brand, this.newKeg.price, this.newKeg.alcoholContent));
-  //   this.showNewKegForm = false;
-  //   this.newKeg = new Keg(null , null , null , null);
-  // }
 }
